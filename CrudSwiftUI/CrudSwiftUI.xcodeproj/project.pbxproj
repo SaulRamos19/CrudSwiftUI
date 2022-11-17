@@ -100,10 +100,10 @@
 			children = (
 				C5847102292549A8001A2B5B /* CrudSwiftUIApp.swift */,
 				C5847104292549A8001A2B5B /* ContentView.swift */,
-				C5847106292549A9001A2B5B /* Assets.xcassets */,
-				C5847108292549A9001A2B5B /* Preview Content */,
 				C584712C29254A24001A2B5B /* CoreDataManager.swift */,
 				C584712E29254A9C001A2B5B /* Pedidos.xcdatamodeld */,
+				C5847106292549A9001A2B5B /* Assets.xcassets */,
+				C5847108292549A9001A2B5B /* Preview Content */,
 			);
 			path = CrudSwiftUI;
 			sourceTree = "<group>";

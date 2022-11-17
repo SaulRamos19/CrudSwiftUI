@@ -5,7 +5,7 @@ class CoreDataManager{
     let persistentContainer: NSPersistentContainer
 
     init(){
-        persistentContainer = NSPersistentContainer("Pedidos")
+        persistentContainer = NSPersistentContainer(name: "Pedidos")
         persistentContainer.loadPersistentStores(completionHandler:{
             (descripcion, error) in
             if let error = error {
@@ -14,9 +14,9 @@ class CoreDataManager{
         })
     }
 
-    func guardarMobilaria(idPedido: Int64, cliente: String, articulo: String, fechaEntrega: String, direccion: String, total: Double, estado: String){
+    func guardarPedidos(idPedido: String, cliente: String, articulo: String, fechaEntrega: String, direccion: String, total: String, estado: String){
         let pedidos = Pedidos(context: persistentContainer.viewContext)
-        pedidos.idPedido = UUID()
+        pedidos.idPedido = idPedido
         pedidos.cliente = cliente
         pedidos.articulo =  articulo
         pedidos.fechaEntrega = fechaEntrega
@@ -55,7 +55,7 @@ class CoreDataManager{
         }
     }
 
-    fun actualizarPedidos(pedidos: Pedidos){
+    func actualizarPedidos(pedidos: Pedidos){
         let fetchRequest: NSFetchRequest<Pedidos> = Pedidos.fetchRequest()
         let predicate = NSPredicate(format: "idPedido = %@", pedidos.idPedido ?? "")
         fetchRequest.predicate = predicate
@@ -65,7 +65,6 @@ class CoreDataManager{
             let datos = try persistentContainer.viewContext.fetch(fetchRequest)
             let p = datos.first
             p?.idPedido = pedidos.idPedido
-            //Segui asi con los demas atributos
             try persistentContainer.viewContext.save()
             print("Pedido Guardado")
         }catch{
@@ -73,9 +72,9 @@ class CoreDataManager{
         }
     }
 
-    fun leerPedidos(idmob: String) -> Pedidos?{
+    func leerPedidos(idPedido: String) -> Pedidos?{
         let fetchRequest: NSFetchRequest<Pedidos> = Pedidos.fetchRequest()
-        let predicate = NSPredicate(format: "idPedido = %@", idPedidos)
+        let predicate = NSPredicate(format: "idPedido = %@", idPedido)
         fetchRequest.predicate = predicate
         do{
             let datos = try persistentContainer.viewContext.fetch(fetchRequest)
