@@ -25,7 +25,10 @@ struct ContentView: View {
         NavigationView{
             VStack{
                 NavigationLink(destination: VStack{
-                    TextField("Pedido ID", text: self.$newidPedido).multilineTextAlignment(.center)
+                    TextField("Pedido ID", text: self.$newidPedido)
+                        .padding()
+                        .background(Color.blue)
+                            .clipShape(RoundedRectangle(cornerRadius: 8))
                     TextField("Cliente", text: self.$newcliente).multilineTextAlignment(.center)
                     TextField("Articulo", text: self.$newarticulo).multilineTextAlignment(.center)
                     TextField("Fecha de Entrega", text: self.$newfechaEntrega).multilineTextAlignment(.center)
@@ -47,6 +50,8 @@ struct ContentView: View {
                     }){
                     Text("Agregar")
                 }
+                
+                
 
                 List{
                     ForEach(prodArray, id: \.self){
