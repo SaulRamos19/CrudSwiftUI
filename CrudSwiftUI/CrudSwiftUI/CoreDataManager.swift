@@ -66,7 +66,7 @@ class CoreDataManager{
             let p = datos.first
             p?.idPedido = pedidos.idPedido
             try persistentContainer.viewContext.save()
-            print("Pedido Guardado")
+            print("Pedido Actualizado")
         }catch{
             print("failed to save error en \(error)")
         }

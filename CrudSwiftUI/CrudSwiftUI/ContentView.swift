@@ -19,6 +19,7 @@ struct ContentView: View {
     @State var newestado = ""
     @State var seleccionado: Pedidos?
     @State var prodArray = [Pedidos]()
+    @State var isTapped = false
 
 
     var body: some View {
@@ -26,15 +27,19 @@ struct ContentView: View {
             VStack{
                 NavigationLink(destination: VStack{
                     TextField("Pedido ID", text: self.$newidPedido)
-                        .padding()
-                        .background(Color.blue)
-                            .clipShape(RoundedRectangle(cornerRadius: 8))
-                    TextField("Cliente", text: self.$newcliente).multilineTextAlignment(.center)
-                    TextField("Articulo", text: self.$newarticulo).multilineTextAlignment(.center)
-                    TextField("Fecha de Entrega", text: self.$newfechaEntrega).multilineTextAlignment(.center)
-                    TextField("Direccion", text: self.$newdireccion).multilineTextAlignment(.center)
-                    TextField("Total", text: self.$newtotal).multilineTextAlignment(.center)
-                    TextField("Estado" , text: self.$newestado).multilineTextAlignment(.center)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                    TextField("Cliente", text: self.$newcliente)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                    TextField("Articulo", text: self.$newarticulo)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                    TextField("Fecha de Entrega", text: self.$newfechaEntrega)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                    TextField("Direccion", text: self.$newdireccion)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                    TextField("Total", text: self.$newtotal)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                    TextField("Estado" , text: self.$newestado)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
 
                     Button("Guardar"){
                         coreDM.guardarPedidos(idPedido: newidPedido, cliente: newcliente, articulo: newarticulo, fechaEntrega: newfechaEntrega, direccion: newdireccion, total: newtotal, estado: newestado)
@@ -47,7 +52,7 @@ struct ContentView: View {
                         newestado = ""
                         mostrarPedidos()
                     }
-                    }){
+                }.padding()){
                     Text("Agregar")
                 }
                 
@@ -62,6 +67,13 @@ struct ContentView: View {
                         .onTapGesture{
                             seleccionado = prod
                             idPedido = prod.idPedido ?? ""
+                            cliente = prod.cliente ?? ""
+                            articulo = prod.articulo ?? ""
+                            fechaEntrega = prod.fechaEntrega ?? ""
+                            direccion = prod.direccion ?? ""
+                            total = prod.total ?? ""
+                            estado = prod.estado ?? ""
+                            isTapped.toggle()
                         }
                     }.onDelete(perform: {
                         indexSet in
@@ -73,6 +85,34 @@ struct ContentView: View {
                     })
                 }.padding()
                     .onAppear(perform: {mostrarPedidos()})
+                
+                NavigationLink("",destination: VStack{
+                    TextField("Pedido ID", text: self.$idPedido)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                    TextField("Cliente", text: self.$cliente)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                    TextField("Articulo", text: self.$articulo)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                    TextField("Fecha de Entrega", text: self.$fechaEntrega)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                    TextField("Direccion", text: self.$direccion)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                    TextField("Total", text: self.$total)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                    TextField("Estado" , text: self.$estado)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+
+                    Button("Actualizar"){
+                        seleccionado?.idPedido = idPedido
+                        seleccionado?.cliente = cliente
+                        seleccionado?.articulo = articulo
+                        seleccionado?.fechaEntrega = fechaEntrega
+                        seleccionado?.direccion = direccion
+                        seleccionado?.total = total
+                        seleccionado?.estado = estado
+                        mostrarPedidos()
+                    }
+                }.padding(), isActive: $isTapped)
             }
         }
     }
