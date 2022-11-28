@@ -62,7 +62,7 @@ struct ContentView: View {
                     ForEach(prodArray, id: \.self){
                         prod in
                         VStack{
-                            Text(prod.cliente ?? "")
+                            Text(" PedidoID: ") + Text(prod.idPedido ?? "")
                         }
                         .onTapGesture{
                             seleccionado = prod
@@ -110,9 +110,18 @@ struct ContentView: View {
                         seleccionado?.direccion = direccion
                         seleccionado?.total = total
                         seleccionado?.estado = estado
+                        coreDM.actualizarPedidos(pedidos: seleccionado!)
+                        idPedido = ""
+                        cliente = ""
+                        articulo = ""
+                        fechaEntrega = ""
+                        direccion = ""
+                        total = ""
+                        estado = ""
                         mostrarPedidos()
                     }
                 }.padding(), isActive: $isTapped)
+                    
             }
         }
     }
